@@ -1,0 +1,573 @@
+algoritmo "loja"
+// Disciplina  :  [Linguagem e Lógica de Programação] 
+// Professor   : Antonio Carlos Nicolodi 
+// Função :
+// Autor : Douglas Ronchi
+// Data : 16/10/2015
+// Seção de Declarações 
+   var
+      //Procedimento Venda
+      cliper,cliente,resvis:caractere
+      pag,conf,venres:caractere
+      codcliente,x,totcli:inteiro
+      tvista,tprazo,tcheque,vezes,vz1,vz2:inteiro
+      aprazo:vetor[1..12] de real
+      codclientes:vetor[1..20] de inteiro
+      clientes:vetor[1..20] de caractere
+      valorcli:vetor[1..20] de real
+      //Programa Principal
+      codprod:vetor[1..20] de inteiro
+      prodnome:vetor[1..20] de caractere
+      prodcvalor:vetor[1..20] de real
+      prodvalor:vetor[1..20] de real
+      estoque:vetor[1..20] de inteiro
+      //Procedimento Loja e outros
+      produto,v1,res,resv,resc,enter,nomeloja,sis,prg:caractere
+      valor,total,totalv,porc,lucro,lucrot:real
+      totalvv,totalp,totalc,dv,valopra:real
+      i,i1,i2,i3,n1,codvenda,q1,q1t,y:inteiro
+      totprod,codprod1,estoque1:inteiro
+      prodnome1,buscaprod,modsoun,modsoun2,codnome:caractere
+      prodcvalor1,prodvalor1:real
+      //Procedimento Cadastro de usuário e login
+      user:vetor[1..20] de caractere
+      senha:vetor[1..20] de inteiro
+      cuser:vetor[1..20] de caractere
+      csenha:vetor[1..20] de inteiro
+      cadastro,login,reslog:caractere
+      c,a,pass,con,ui,acesso:inteiro
+      
+inicio
+   escreval("Digite o Nome da sua Loja:")
+   leia(nomeloja)
+   totcli<-0
+   x<-0
+   i<-0
+   totprod<-0
+   a<-1
+   c<-1
+   escreval("O sistema não tem nenhum Administrador,")
+   escreval("temos que criar um primeiro")
+   escreval("Digite um nome de usuário:")
+   leia(user[1])
+   escreval("Digite uma senha:")
+   leia(senha[1])
+   login<-user[1]
+   pass<-senha[1]
+   acesso<-10
+   a<-a+1
+   limpatela
+//PROCEDIMENTO LOGAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento logar
+      inicio
+         se (a<1) entao
+            escreval("Nenhum usuário cadastrado")
+            escreval("Vá no menu '5 - Cadastro de Usuários'")
+            escreval("para cadastrar um usuário válido")
+            escreval("Pressione Enter...")
+            leia(enter)
+         senao
+            escreval("Entre com seu usuário e senha:")
+            escreva("Login:")
+            leia(login)
+            escreva("Senha:")
+            leia(pass)
+            ui<-10
+               para con de 1 ate 20 passo 1 faca
+                  se (login=user[con]) e (pass=senha[con]) entao
+                     escreval("Administrador ",login," Entrou")
+                     escreval("Pressione Enter...")
+                     leia(enter)
+                     ui<-1
+                     acesso<-10
+                  fimse
+               fimpara
+               para con de 1 ate 20 passo 1 faca
+                  se (login=cuser[con]) e (pass=csenha[con]) entao
+                     escreval("Usuário comum ",login," Entrou")
+                     escreval("Pressione Enter...")
+                     leia(enter)
+                     ui<-1
+                     acesso<-5
+                  fimse
+               fimpara
+               se (ui=10) entao
+                     escreval("Usuário Incorreto ou Inexistente!")
+                     escreval("Pressione Enter...")
+                     leia(enter)
+                     login<-"0"
+                     pass<-0
+               fimse
+         fimse
+      limpatela
+   fimprocedimento
+//PROCEDIMENTO CADASTRO DE USUÁRIOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento caduser
+      inicio
+         escreval("Cadastro de Usuários")
+         escreval("Que tipo de usuário você deseja cadastrar?")
+         escreval("")
+         escreval("A - Administrador")
+         escreval("C - Comum")
+         escreval("Ou aperte Enter para sair...")
+         leia(cadastro)
+            escolha cadastro
+               caso "A"
+                  para con de 1 ate 20 passo 1 faca
+                     se (login=user[con]) e (pass=senha[con]) entao
+                     escreval("Usuário ",login," Entrou!")
+                     escreval("Pressione enter...")
+                     leia(enter)
+                     //Adicionando novo Admin
+                     escreval("Digite um nome de usuário:")
+                     leia(user[a])
+                     escreval("Digite uma senha:")
+                     leia(senha[a])
+                     escreval("Administrador Cadastrado com sucesso!")
+                     escreval("Pressione enter...")
+                     leia(enter)
+                     a<-a+1
+                     fimse
+                  fimpara
+               caso "C"
+                  escreval("Cadastro de usuário comum")
+                  escreval("Digite um nome de usuário:")
+                  leia(cuser[c])
+                  escreval("Digite uma senha:")
+                  leia(csenha[c])
+                  escreval("Usuário Cadastrado com sucesso!")
+                  escreval("Pressione enter...")
+                  leia(enter)
+                  c<-c+1
+            fimescolha
+            limpatela
+   fimprocedimento
+
+//PROCEDIMENTO VENDA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento venda
+      inicio
+      limpatela
+      escreval("Você deseja:")
+      escreval("1 - Cadastrar cliente")
+      escreval("2 - Entrar com código de cliente?")
+      leia(cliper)
+         escolha cliper
+            caso "1"
+               escreval("Código do cliente:")
+               leia(codcliente)
+               escreval("Nome do cliente:")
+               leia(cliente)
+               x<-totcli+1
+               codclientes[x]<-codcliente
+               clientes[x]<-cliente
+               totcli<-totcli+1
+            caso "2"
+               escreval("Digite o código do cliente:")
+               leia(x)
+         fimescolha
+         se (valorcli[x]>1000) entao
+            escreval("O cliente deve mais que o limite de 1000,00 reais")
+            escreval("e não poderá comprar mais se não for a vista...")
+            leia(enter)
+            escreval("Cliente pagará a vista? (S ou N)")
+            leia(resvis)
+            se (resvis="s") entao
+               escreval(clientes[x]," Pagará: ",totalvv," Reais")
+               escreval("Confirma? (S ou N)")
+               leia(conf)
+                  escolha conf
+                     caso "s"
+                        tvista<-tvista+1
+                        venres<-"s"
+                     caso "n"
+                        venres<-"n"
+                  fimescolha
+            fimse
+         senao
+      venres<-"n"
+      enquanto (venres="n") faca
+         escreval("Como será a forma de pagamento de ", clientes[x])
+         escreval("")
+         escreval("Compra de ",clientes[x],":",totalv)
+         totalvv<-totalv-((totalv*10)/100)
+         escreval("A Vista: ",totalvv," Reais.")
+         totalp<-((totalv*20)/100)+totalv
+         escreval("A Prazo: ",totalp," Reais.")
+         totalc<-((totalv*40)/100)+totalv
+         escreval("Com Cheque: ",totalc," Reais")
+         escreval("")
+         escreval("Escolha uma opção:")
+         escreval("1 - A Vista 10% Desconto")
+         escreval("2 - A Prazo 20% Juros")
+         escreval("3 - Com Cheque 30% Juros")
+         escreval("0 - Cancelar")
+         leia(pag)
+            escolha pag
+               caso "1"
+                  escreval(clientes[x]," Pagará: ",totalvv," Reais")
+                  escreval("Confirma? (S ou N)")
+                  leia(conf)
+                        escolha conf
+                           caso "s"
+                              tvista<-tvista+1
+                              //Gerador para os resultados finais:
+                              total<-total+totalv-(totalv-totalvv)
+                              q1t<-q1t+q1
+                              lucrot<-lucrot+lucro-(totalv-totalvv)
+                              
+                              venres<-"s"
+                           caso "n"
+                              venres<-"n"
+                        fimescolha
+               caso "2"
+                  escreval(cliente," Pagará: ",totalp," Reais")
+                  leia(enter)
+                  escreval("Em quantas vezes ",cliente," irá pagar? Até 12x")
+                  leia(vezes)
+                  dv<-0
+                  valopra<-totalp
+                  totalp<-totalp/vezes
+                     para vz1 de 1 ate vezes passo 1 faca
+                        aprazo[vz1]<-totalp
+                     fimpara
+                     escreval("Parcelas:")
+                     para vz2 de 1 ate vezes passo 1 faca
+                        escreval(vz2,": ",aprazo[vz2])
+                     fimpara
+                  escreval("Confirma? (S ou N)")
+                     leia(conf)
+                        escolha conf
+                           caso "s"
+                              tprazo<-tprazo+1
+                              venres<-"s"
+                              valorcli[x]<-valorcli[x]+valopra
+                              //Gerador para os resultados finais:
+                              total<-total+valopra
+                              q1t<-q1t+q1
+                              lucrot<-lucrot+lucro+(valopra-totalv)
+                              valopra<-0
+                           caso "n"
+                              vz2<-0
+                              para vz2 de 1 ate vezes faca
+                                 aprazo[vz2]<-0
+                              fimpara
+                              venres<-"n"
+                        fimescolha
+               caso "3"
+                  escreval(cliente," Pagará: ",totalc," Reais")
+                  escreval("Confirma? (S ou N)")
+                  leia(conf)
+                        escolha conf
+                           caso "s"
+                              tcheque<-tcheque+1
+                              //Gerador para os resultados finais:
+                              total<-total+totalc
+                              q1t<-q1t+q1
+                              lucrot<-lucrot+lucro+(totalc-totalv)
+                              venres<-"s"
+                           caso "n"
+                              venres<-"n"
+                        fimescolha
+               fimescolha
+      fimenquanto
+         fimse
+      limpatela
+   fimprocedimento
+   
+//PROCEDIMENTO LOJA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento loja
+      inicio
+      // Seção de Comandos
+         res<-"s"
+         enquanto (res="SIM") ou (res="s") faca
+            limpatela
+            escreval(nomeloja)
+            escreval("Escolha uma opção:")
+            escreval("C - Cadastro de produto")
+            escreval("V - Venda de produto")
+            escreval("M - Alteração de Produto")
+            escreval("CC - Cadastro de Cliente")
+            Escreval("S - Sair")
+            leia(v1)
+               escolha v1
+                  caso "C"
+                     i<-totprod+1
+                     escreval("Cadastro de Produtos:")
+                     escreval("Digite o código do ",i,"º produto:")
+                     leia(codprod1)
+                     escreval("Digite o nome do ",i,"º Produto:")
+                     leia(prodnome1)
+                     escreval("Qual o valor de compra de ",prodnome1," ?")
+                     leia(prodcvalor1)
+                     escreval("Qual a porcentagem de lucro no produto?")
+                     leia(porc)
+                     prodvalor1<-((prodcvalor1*porc)/100)+prodcvalor1
+                     escreval("Qual a quantidade comprada?")
+                     leia(estoque1)
+                     y<-i
+                     codprod[i]<-codprod1
+                     prodnome[i]<-prodnome1
+                     prodcvalor[i]<-prodcvalor1
+                     estoque[i]<-estoque1
+                     prodvalor[i]<-prodvalor1
+                     totprod<-totprod+1
+                     limpatela
+                  caso "M"
+                     se (acesso=10) entao
+                        escreval("Você deseja buscar o produto por código,")
+                        escreval("ou pelo nome do produto? (C ou N)")
+                        leia(buscaprod)
+                        escolha buscaprod
+                           caso "C"
+                              escreval("Qual o código do produto que deseja modificar?")
+                              leia(codvenda)
+                                 para i1 de 1 ate 20 passo 1 faca
+                                    se codvenda=codprod[i1] entao
+                                    escreval("Produto:........",prodnome[i1])
+                                    escreval("Valor:..........",prodvalor[i1])
+                                    escreval("Qtd no Estoque:.",estoque[i1])
+                                    escreval("É esse produto que você deseja modificar? (S ou N)")
+                                    leia(modsoun)
+                                    escolha modsoun
+                                       caso "S"
+                                          escreval("Alteração de Produtos:")
+                                          escreval("Digite o novo código do ",i1,"º produto:")
+                                          leia(codprod1)
+                                          escreval("Digite o novo nome do ",i1,"º Produto:")
+                                          leia(prodnome1)
+                                          escreval("Qual o valor de compra de ",prodnome1," ?")
+                                          leia(prodcvalor1)
+                                          escreval("Qual a porcentagem de lucro no produto?")
+                                          leia(porc)
+                                          prodvalor1<-((prodcvalor1*porc)/100)+prodcvalor1
+                                          escreval("Qual a quantidade comprada?")
+                                          leia(estoque1)
+                                          codprod[i1]<-codprod1
+                                          prodnome[i1]<-prodnome1
+                                          prodcvalor[i1]<-prodcvalor1
+                                          estoque[i1]<-estoque1
+                                          prodvalor[i1]<-prodvalor1
+                                       caso "N"
+                                          escreval("Nada Foi alterado.")
+                                          escreval("Pressione enter...")
+                                          leia(enter)
+                                    fimescolha
+                                    fimse
+                                 fimpara
+                           caso "N"
+                              escreval("Qual o nome do produto que deseja modificar?")
+                              leia(codnome)
+                                 para i1 de 1 ate 20 passo 1 faca
+                                    se codnome=prodnome[i1] entao
+                                    escreval("Produto:........",prodnome[i1])
+                                    escreval("Valor:..........",prodvalor[i1])
+                                    escreval("Qtd no Estoque:.",estoque[i1])
+                                    escreval("É esse produto que você deseja modificar? (S ou N)")
+                                    leia(modsoun2)
+                                    escolha modsoun2
+                                       caso "S"
+                                          escreval("Alteração de Produtos:")
+                                          escreval("Digite o novo código do ",i1,"º produto:")
+                                          leia(codprod1)
+                                          escreval("Digite o novo nome do ",i1,"º Produto:")
+                                          leia(prodnome1)
+                                          escreval("Qual o valor de compra de ",prodnome1," ?")
+                                          leia(prodcvalor1)
+                                          escreval("Qual a porcentagem de lucro no produto?")
+                                          leia(porc)
+                                          prodvalor1<-((prodcvalor1*porc)/100)+prodcvalor1
+                                          escreval("Qual a quantidade comprada?")
+                                          leia(estoque1)
+                                          codprod[i1]<-codprod1
+                                          prodnome[i1]<-prodnome1
+                                          prodcvalor[i1]<-prodcvalor1
+                                          estoque[i1]<-estoque1
+                                          prodvalor[i1]<-prodvalor1
+                                       caso "N"
+                                          escreval("Nada Foi alterado.")
+                                          escreval("Pressione enter...")
+                                          leia(enter)
+                                    fimescolha
+                                    fimse
+                                 fimpara
+                              fimescolha
+                     senao
+                        escreval("Usuário comum não pode alterar dados!")
+                        escreval("Pressione Enter...")
+                        leia(enter)
+                     fimse
+                     limpatela
+                  caso "V"
+                     resv<-"não"
+                     enquanto (resv="não") ou (resv="n") faca
+                     escreval("Digite o código do produto que deseja vender:")
+                     leia(codvenda)
+                        para i1 de 1 ate 20 passo 1 faca
+                           se codvenda=codprod[i1] entao
+                           escreval("Produto:........",prodnome[i1])
+                           escreval("Valor:..........",prodvalor[i1])
+                           escreval("Qtd no Estoque:.",estoque[i1])
+                           escreval("Você vendeu quantos?")
+                           leia(q1)
+                              se (q1<=estoque[i1]) entao
+                                 totalv<-0
+                                 lucro<-0
+                                 estoque[i1]<-estoque[i1]-q1
+                                 escreval("Você vendeu ",q1," ",prodnome[i1],"(s)!")
+                                 totalv<-totalv+(prodvalor[i1]*q1)
+                                 escreval("Valor Total de venda: ",totalv)
+                                 lucro<-(prodvalor[i1]*q1)-(prodcvalor[i1]*q1)
+                                 escreval("Você Teve um lucro de ",lucro," nessa venda!")
+                                 escreval("Confere? (S ou N)")
+                                 leia(resv)
+                                    escolha resv
+                                       caso "n"
+                                          total<-total-totalv
+                                          estoque[i1]<-estoque[i1]+q1
+                                       caso "s"
+                                          venda
+                                          escreval("Venda efetuada com sucesso!")
+                                          escreval("")
+                                          escreval("Pressione Enter...")
+                                          leia(enter)
+                                    fimescolha
+                              fimse
+                                 se (q1>estoque[i1]) entao
+                                    escreval("Quantidade não disponível ou")
+                                    escreval("      Produto esgotado!")
+                                    escreval("Você tem ",estoque[i1]," disponível para venda")
+                                    escreval("Pressione Enter...")
+                                    leia(enter)
+                                    limpatela
+                                 fimse
+                           fimse
+                        fimpara
+                     fimenquanto
+                     limpatela
+                  caso "CC"
+                     escreval("Código do cliente:")
+                     leia(codcliente)
+                     escreval("Nome do cliente:")
+                     leia(cliente)
+                     x<-totcli+1
+                     codclientes[x]<-codcliente
+                     clientes[x]<-cliente
+                     totcli<-totcli+1
+                     limpatela
+                  outrocaso
+                     res<-"n"
+               fimescolha
+            fimenquanto
+         limpatela
+   fimprocedimento
+//LISTA DE CLIENTES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento listaclientes
+      inicio
+      limpatela
+      escreval("Lista de Clientes e seus respectivos saldos")
+      escreval("")
+      escreval("Se o saldo estiver negativo, significa que o cliente")
+      escreval("está devendo, e se estiver positivo, esse é o valor que")
+      escreval("este cliente já comprou e pagou.")
+      escreval("Clientes:")
+      para i3 de 1 ate x faca
+         escreval(clientes[i3],": ",valorcli[i3])
+      fimpara
+      se (x=0) entao
+         escreval("Nenhum cliente cadastrado.")
+      fimse
+      escreval("")
+      escreval("Pressione Enter...")
+      leia(enter)
+   fimprocedimento
+//MENU PRINCIPAL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   procedimento principal
+      inicio
+         prg<-"s"
+         enquanto (prg="s") faca
+               escreval(nomeloja)
+               escreval("O que deseja fazer?")
+               escreval("")
+               escreval("1 - Sistema de Loja")
+               escreval("2 - Resultados")
+               escreval("3 - Estoque")
+               escreval("4 - Lista de Clientes e Saldos")
+               escreval("5 - Cadastro de Usuários")
+               escreval("6 - Logar no Sistema")
+               escreval("0 - Sair")
+               leia(sis)
+                  escolha sis
+                     caso "1"
+                        loja
+                        prg<-"s"
+                        limpatela
+                     caso "2"
+                        se (acesso=10) entao
+                           limpatela
+                              escreval("       ",nomeloja)
+                              escreval("")
+                              escreval("Foram vendidos ",q1t," Produtos!")
+                              escreval("Um total de ",total," Reais em vendas")
+                              escreval("Gerou um lucro total de ",lucrot," Reais")
+                              escreval("Clientes que pagaram a Vista:....",tvista)
+                              escreval("Clientes que pagaram a Prazo:....",tprazo)
+                              escreval("Clientes que pagaram Com Cheque:.",tcheque)
+                              escreval("")
+                              escreval("Pressione Enter...")
+                              leia(enter)
+                              limpatela
+                              prg<-"s"
+                        senao
+                           escreval("Usuário comum não pode visualizar resultados!")
+                           escreval("Pressione Enter...")
+                           leia(enter)
+                           escreval("logar com administrador?")
+                           leia(reslog)
+                              escolha reslog
+                                 caso "S"
+                                    logar
+                                 outrocaso
+                              fimescolha
+                        fimse
+                     caso "0"
+                        prg<-"n"
+                     caso "3"
+                        se (y>0) entao
+                           escreval("Estoque")
+                              para i2 de 1 ate y passo 1 faca
+                                 escreval(prodnome[i2]," : ",estoque[i2])
+                              fimpara
+                           escreval("")
+                           escreval("Pressione Enter...")
+                           leia(enter)
+                        senao
+                           escreval("O estoque está vazio!")
+                           escreval("Pressione Enter...")
+                           leia(enter)
+                        fimse
+                        limpatela
+                        prg<-"s"
+                     caso "4"
+                        listaclientes
+                        limpatela
+                        prg<-"s"
+                     //CASO DE TESTE >>>>>>>>>>>>>>>>>>>>>>>>
+                     caso "5"
+                        caduser
+                        prg<-"s"
+                     caso "6"
+                        logar
+                        prg<-"s"
+                     outrocaso
+                        limpatela
+                        prg<-"s"
+                  fimescolha
+               fimenquanto
+      fimprocedimento
+      se (acesso=10) entao
+         principal
+      senao
+         caduser
+         principal
+      fimse
+fimalgoritmo
