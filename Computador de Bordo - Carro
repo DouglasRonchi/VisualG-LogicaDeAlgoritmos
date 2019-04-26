@@ -1,0 +1,142 @@
+Algoritmo "Carro"
+// Disciplina  :  [Linguagem e Lógica de Programação]
+// Professor   : Antonio Carlos Nicolodi
+// Descrição   : Aqui você descreve o que o programa faz! (função)
+// Autor(a)    : Nome do(a) aluno(a)
+// Data atual  : 23/04/2019
+Var
+   estado, alerta,ultimo_comando_velocidade,comando:caracter
+   velocidade, marcha,sair:inteiro
+Inicio
+   estado:="Desligado"
+   ultimo_comando_velocidade:="N/A"
+   velocidade:=0
+   marcha:=0
+   alerta:="Coloque o cinto de segurança!"
+   enquanto sair=0 faca
+      limpatela
+      escreval("COMANDOS VÁLIDOS: ligar | desligar | sair | acelerar | frenar | mmaior | mmenor")
+      escreval("_______________________________________________________________________________")
+      escreval("")
+      escreval("Estado do carro: ", estado)
+      escreval("Último comando de velocidade: ", ultimo_comando_velocidade)
+      escreval("Velocidade: ", velocidade," Km/H")
+      escreval("Marcha atual: ", marcha)
+      escreval("!!! ALERTA: ", alerta)
+      escreval("_______________________________________________________________________________")
+      escreva ("Digite o comando: ")
+      leia (comando)
+      escolha comando
+      caso "ligar"
+         se marcha=0 entao
+            estado:="Ligado"
+            alerta:="Carro Ligado"
+         senao
+            alerta:="Carro deve estar no neutro para ligar"
+         fimse
+      caso "desligar"
+         se velocidade=0 entao
+            estado:="Desligado"
+            alerta:="Carro Desligado"
+         senao
+            alerta:="Carro tem que estar parado para desligar!"
+         fimse
+      caso "acelerar"
+         se estado="Ligado"entao
+            se marcha=0 entao
+               alerta:="Deve engatar a primeira marcha para acelerar"
+            senao
+               se (marcha=1) e (velocidade<30) entao
+                  velocidade:=velocidade+10
+                  ultimo_comando_velocidade:="Velocidade aumentada em 10 Km/H"
+                  se velocidade=30 entao
+                     alerta:="Deve engatar a segunda marcha para acelerar"
+                  fimse
+               senao
+                  se (marcha=2) e (velocidade<60) entao
+                     velocidade:=velocidade+10
+                     ultimo_comando_velocidade:="Velocidade aumentada em 10 Km/H"
+                     se velocidade=60 entao
+                        alerta:="Deve engatar a terceira marcha para acelerar"
+                     fimse
+                  senao
+                     se (marcha=3) e (velocidade<90) entao
+                        velocidade:=velocidade+10
+                        ultimo_comando_velocidade:="Velocidade aumentada em 10 Km/H"
+                        se velocidade=90 entao
+                           alerta:="Deve engatar a quarta marcha para acelerar"
+                        fimse
+                     senao
+                        se (marcha=4) e (velocidade<120) entao
+                           velocidade:=velocidade+10
+                           ultimo_comando_velocidade:="Velocidade aumentada em 10 Km/H"
+                           se velocidade=120 entao
+                              alerta:="Deve engatar a quinta marcha para acelerar"
+                           fimse
+                        senao
+                           se (marcha=5) e (velocidade<150) entao
+                              velocidade:=velocidade+10
+                              ultimo_comando_velocidade:="Velocidade aumentada em 10 Km/H"
+                           senao
+                              se velocidade=150 entao
+                                 alerta:="Velocidade Máxima!"
+                              fimse
+                           fimse
+                        fimse
+                     fimse
+                  fimse
+               fimse
+            fimse
+         senao
+            alerta:="O carro tem que estar ligado para acelerar"
+         fimse
+      caso "frenar"
+         se estado="Ligado"entao
+            se (velocidade>120) e (marcha=5) entao
+               velocidade:=velocidade-10
+               ultimo_comando_velocidade:="Velocidade reduzida em 10 Km/H"
+            senao
+               se (velocidade>90) e (marcha=4) entao
+                  velocidade:=velocidade-10
+                  ultimo_comando_velocidade:="Velocidade reduzida em 10 Km/H"
+               senao
+                  se (velocidade>60) e (marcha=3) entao
+                     velocidade:=velocidade-10
+                     ultimo_comando_velocidade:="Velocidade reduzida em 10 Km/H"
+                  senao
+                     se (velocidade>30) e (marcha=2) entao
+                        velocidade:=velocidade-10
+                        ultimo_comando_velocidade:="Velocidade reduzida em 10 Km/H"
+                     senao
+                        se (velocidade>0) e (marcha=1) entao
+                           velocidade:=velocidade-10
+                           ultimo_comando_velocidade:="Velocidade reduzida em 10 Km/H"
+                        senao
+                           alerta:="Devia diminuir para frenar - O Carro Morreu!"
+                           estado:="Desligado"
+                           velocidade:=0
+                        fimse
+                     fimse
+                  fimse
+               fimse
+            fimse
+         fimse
+      caso "mmaior"
+         se marcha = 5 entao
+            alerta:="Não tem mais marchas!"
+         senao
+            marcha:=marcha+1
+         fimse
+      caso "mmenor"
+         se marcha = 0 entao
+            alerta:="Já está no neutro!"
+         senao
+            marcha:=marcha-1
+         fimse
+      caso "sair"
+         sair:=1
+      outrocaso
+         limpatela
+      fimescolha
+   fimenquanto
+Fimalgoritmo
